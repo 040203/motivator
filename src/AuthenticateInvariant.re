@@ -25,15 +25,15 @@ type authenticationState =
   | Success
   | NotAuthorized
   | NotAvailable;
-  
+
 [@react.component]
 let make = (~children) => {
-  let (authState, setAuthenticated) = React.useState(() => NotAuthorized);
+  let (authState, setAuthenticated) = React.useState(() => Success);
 
   let authenticate = _ => {
     LocalAuthentication.authenticateAsync(authenticationOptions)
     |> Promise.then_(authResult =>
-         setAuthenticated(_ => 
+         setAuthenticated(_ =>
            LocalAuthentication.successGet(authResult)
              ? Success : NotAuthorized
          )
@@ -46,7 +46,10 @@ let make = (~children) => {
   };
 
   React.useEffect0(() => {
-    authenticate();
+    if (authState !== Success) {
+      authenticate();
+    };
+
     None;
   });
 
