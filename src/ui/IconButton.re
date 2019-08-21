@@ -10,7 +10,7 @@ let styles =
   );
 
 [@react.component]
-let make = (~selected=false, ~onPress, ~name, ~size=24) => {
+let make = (~selected=false, ~onPress, ~name, ~size=26) => {
   let color =
     selected ? Styles.theme.palette.primary : Styles.theme.palette.grey;
 

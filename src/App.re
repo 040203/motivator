@@ -1,6 +1,9 @@
 [@react.component]
 let app = () => {
-  <AuthenticateInvariant>
-    <TabNavigator />
-  </AuthenticateInvariant>;
+  React.useEffect0(_ => {
+    Db.migrate(ignore);
+    None;
+  });
+
+  <AuthenticateInvariant> <TabNavigator /> </AuthenticateInvariant>;
 };

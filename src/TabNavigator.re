@@ -5,26 +5,17 @@ open ReactNative.Style;
 let styles =
   makeStyles(theme =>
     {
-      "pageTitle":
-        style(
-          ~fontSize=36.,
-          ~marginBottom=theme.spacing(2.),
-          ~fontWeight=`bold,
-          (),
-        ),
+      "pageContainer": style(~width=pct(100.), ~alignItems=`center, ()),
       "container":
         style(
           ~flex=1.,
           ~padding=theme.spacing(1.),
-          ~paddingTop=theme.spacing(4.),
-          ~marginTop=theme.spacing(4.),
           ~alignItems=`center,
           ~backgroundColor="#F5FCFF",
           (),
         ),
       "tabs":
         style(
-          ~width=pct(100.),
           ~marginTop=auto,
           ~borderTopWidth=1.,
           ~borderTopColor="#eff0f1",
@@ -52,13 +43,15 @@ let make = () => {
     };
 
   <SafeAreaView style=styles##container>
-    <Text style=styles##pageTitle> {React.string(title)} </Text>
-    <ScrollView>
-      {switch (route) {
-       | Wieght => <ProfileRe navigate />
-       | Transformation => <ProfileRe navigate />
-       | Statistics => <ProfileRe navigate />
-       }}
+    <ScrollView style={style(~width=pct(100.), ())}>
+      <View style=styles##pageContainer>
+        <StyledText variant=LargeTitle value=title />
+        {switch (route) {
+         | Wieght => <WeightScreen />
+         | Transformation => <WeightScreen />
+         | Statistics => <WeightScreen />
+         }}
+      </View>
     </ScrollView>
     <View style=styles##tabs>
       <IconButton
