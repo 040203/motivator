@@ -4,6 +4,9 @@ type palette = {
   primary: string,
   primaryLight: string,
   primaryDark: string,
+  secondary: string,
+  secondaryLight: string,
+  secondaryDark: string,
   grey: string,
 };
 
@@ -17,6 +20,9 @@ let theme = {
     primary: "#673ab7",
     primaryLight: "#7e57c2",
     primaryDark: "#512da8",
+    secondary: "#ff9800",
+    secondaryLight: "#ffa726",
+    secondaryDark: "#fb8c00",
     grey: "#bdbdbd",
   },
   spacing: dpValue => dp(dpValue *. 8.),

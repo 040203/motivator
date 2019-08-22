@@ -1,3 +1,4 @@
+open Helpers;
 open ReactNative;
 open ReactNative.Style;
 
@@ -20,9 +21,9 @@ let animations = [|
 |];
 
 [@react.component]
-let make = (~initialWieght, ~isOpen, ~onChange, ~onClose) => {
+let make = (~isEditing, ~initialWieght, ~isOpen, ~onChange, ~onClose) => {
   let (weight, setWeight) = React.useState(_ => initialWieght);
-  let animationRef = React.useRef(Helpers.getRandomItem(animations));
+  let animationRef = React.useRef(getRandomItem(animations));
 
   <Modal animationType=`slide visible=isOpen>
     <SafeAreaView style=styles##container>
@@ -33,14 +34,21 @@ let make = (~initialWieght, ~isOpen, ~onChange, ~onClose) => {
         variant=LargeTitle
         textAlign=`center
         style=styles##title
-        value="Add weight"
+        value={isEditing ? "Edit weight" : "Add weight"}
       />
-      <StyledText textAlign=`center value="Make sure you have samew clothes" />
+      <StyledText textAlign=`center value="Make sure you have same clothes" />
       <View style=styles##picker>
         <WeightInput value=weight onChange={value => setWeight(_ => value)} />
       </View>
       <View style=styles##submitBtn>
-        <LargeButton onPress={_ => onChange(weight)} title="Submit" />
+        <LargeButton
+          onPress={_ => onChange(weight)}
+          title="Submit"
+          color={
+            isEditing
+              ? Styles.theme.palette.secondary : Styles.theme.palette.primary
+          }
+        />
         <Button title="Close" onPress={_ => onClose()} />
       </View>
     </SafeAreaView>

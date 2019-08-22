@@ -13,7 +13,6 @@ let styles =
           ~alignItems=`center,
           ~justifyContent=`center,
           ~borderRadius=8.,
-          ~backgroundColor=theme.palette.primary,
           ~marginLeft=auto,
           ~marginRight=auto,
           (),
@@ -22,10 +21,13 @@ let styles =
   );
 
 [@react.component]
-let make = (~onPress, ~title) => {
+let make = (~onPress, ~color=Styles.theme.palette.primary, ~title) => {
   <TouchableHighlight
     underlayColor={Styles.theme.palette.primaryDark}
-    style=styles##touchable
+    style={Style.array([|
+      styles##touchable,
+      style(~backgroundColor=color, ()),
+    |])}
     onPress>
     <StyledText variant=Title value=title color="white" />
   </TouchableHighlight>;

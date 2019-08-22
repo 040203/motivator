@@ -64,5 +64,5 @@ let selectAllWeights = (onSuccess: array(weight) => unit) =>
   sql("SELECT * FROM weights", onSuccess, []);
 
 let insertWieght = (onSuccess, (date, weight): (Js.Date.t, float)) =>
-  [`String(date |> DateFns.addDays(-1) |> DateFns.format("yyyy-MM-dd")), `Float(weight)]
+  [`String(date |> DateFns.format("yyyy-MM-dd")), `Float(weight)]
   |> sql("INSERT or REPLACE INTO weights (date, weight) values(?, ?)", onSuccess);
