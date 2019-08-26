@@ -1,4 +1,3 @@
-open Expo;
 open ReactNative;
 open ReactNative.Style;
 open ReasonDateFns;
@@ -29,37 +28,17 @@ let styles =
 
 [@react.component]
 let make = () => {
-  let (currentWeight, setCurrentWight) = React.useState(() => 0.);
-  let (lastWeightDate, setLastWeightDate) = React.useState(() => None);
+  let (profile, _) = Profile.useProfile();
+
+  let (currentWieght, updateWieght) = Data.useLastWeight();
   let (isAddRecordOpen, setIsAddRecordOpen) = React.useState(() => false);
-
-  React.useEffect0(() => {
-    Db.getLatestWieght(weight => {
-      setCurrentWight(_ => weight |> Db.weightGet);
-      setLastWeightDate(_ =>
-        Some(
-          weight |> Db.dateGet |> DateFns.parse(Js.Date.make(), "yyyy-MM-dd"),
-        )
-      );
-    });
-
-    None;
-  });
 
   let toggleModal = _ => setIsAddRecordOpen(value => !value);
   let isEditing =
-    switch (lastWeightDate) {
-    | Some(date) => DateFns.isSameDay(date, Js.Date.make())
+    switch (currentWieght) {
+    | Some({date}) => DateFns.isSameDay(date, Js.Date.make())
     | None => false
     };
-
-  let handleWeightChange = newWieght => {
-    setCurrentWight(_ => newWieght);
-    setLastWeightDate(_ => Some(Js.Date.make()));
-    toggleModal();
-
-    (Js.Date.make(), newWieght) |> Db.insertWieght(ignore);
-  };
 
   let addNewRecordTile = {
     <LargeTile
@@ -85,9 +64,14 @@ let make = () => {
     />;
   };
 
-  if (currentWeight === 0.) {
-    <> </>;
-  } else {
+  let handleWeightChange = newWeight => {
+    newWeight |> updateWieght;
+    toggleModal();
+  };
+
+  switch (currentWieght) {
+  | None => <> </>
+  | Some({weight}) =>
     <>
       <SvgCharts.ProgressCircle
         style=styles##progress
@@ -98,7 +82,7 @@ let make = () => {
         animationDuration=300>
         <View style=styles##progressLabelContainer>
           <Text style=styles##progressLabel>
-            {str(currentWeight->Js.Float.toString ++ "kg")}
+            {str(weight->Js.Float.toString ++ "kg")}
           </Text>
         </View>
       </SvgCharts.ProgressCircle>
@@ -109,11 +93,11 @@ let make = () => {
       {isEditing ? modifyRecordTile : addNewRecordTile}
       <WeightAddRecord
         isEditing
-        initialWieght=currentWeight
+        initialWieght=weight
         isOpen=isAddRecordOpen
         onClose=toggleModal
         onChange=handleWeightChange
       />
-    </>;
+    </>
   };
 };

@@ -15,16 +15,17 @@ for (x in 40 to 150) {
   |> ignore;
 };
 
-[@react.component]
-let make = (~value: float, ~style=?, ~onChange: float => unit) => {
-  let pickerStyle =
-    switch (style) {
-    | Some(style) => style
-    | None => Style.style(())
-    };
+let window = Dimensions.get(`window);
 
+[@react.component]
+let make = (~value: float, ~onChange: float => unit) => {
+  // let pickerStyle =
+  //   switch (style) {
+  //   | Some(style) => style
+  //   | None => Style.style(())
+  //   };
   <Picker
-    style=pickerStyle
+    style={Style.style(~width=window##width->Style.dp, ())}
     selectedValue=value
     onValueChange={(value, _) => onChange(value)}>
     {options
