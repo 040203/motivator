@@ -5,7 +5,6 @@ type weightData = {
   weight: float,
 };
 
-
 let useLastWeight = () => {
   let (lastWeight, setLastWeight) = React.useState(_ => None);
 
@@ -20,7 +19,8 @@ let useLastWeight = () => {
             |> DateFns.parse(Js.Date.make(), "yyyy-MM-dd"),
         })
       )
-    );
+    )
+    |> ignore;
 
     None;
   });

@@ -8,9 +8,10 @@ type profileContextValue = {
   updateProfile: profile => unit,
 };
 
-module ProfileContext = {
-  let profileContext = React.createContext((None, ignore));
+let profileContext = React.createContext((None, ignore));
+let useProfile = () => React.useContext(profileContext);
 
+module ProfileProvider = {
   let makeProps = (~value, ~children, ()) => {
     "value": value,
     "children": children,
@@ -18,8 +19,6 @@ module ProfileContext = {
 
   let make = React.Context.provider(profileContext);
 };
-
-let useProfile = () => React.useContext(ProfileContext.profileContext);
 
 [@react.component]
 let make = (~children) => {
@@ -43,11 +42,13 @@ let make = (~children) => {
   });
 
   let updateProfile = data => {
-    setProfile(_ => Some(data));
-    (data.name, data.goal) |> Db.insertProfile(ignore);
+    (data.name, data.goal)
+    |> Db.insertProfile(_ =>
+         setProfile(_ => Some({name: data.name, goal: data.goal}))
+       );
   };
 
-  <ProfileContext value=(profile, updateProfile)>
+  <ProfileProvider value=(profile, updateProfile)>
     ...children
-  </ProfileContext>;
+  </ProfileProvider>;
 };

@@ -21,12 +21,19 @@ let styles =
   );
 
 [@react.component]
-let make = (~onPress, ~color=Styles.theme.palette.primary, ~title) => {
+let make =
+    (
+      ~onPress,
+      ~style as customStyle=?,
+      ~color=Styles.theme.palette.primary,
+      ~title,
+    ) => {
   <TouchableHighlight
     underlayColor={Styles.theme.palette.primaryDark}
     style={Style.array([|
       styles##touchable,
       style(~backgroundColor=color, ()),
+      Helpers.customStyleFromOption(customStyle),
     |])}
     onPress>
     <StyledText variant=Title value=title color="white" />

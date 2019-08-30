@@ -1,15 +1,26 @@
-[@react.component]
-let app = () => {
-  let (profile, _) = Profile.useProfile();
+module AppContainer = {
+  [@react.component]
+  let make = () => {
+    let (profile, _) = Profile.useProfile();
 
+    if (profile === None) {
+      <Authorize />;
+    } else {
+      <AuthenticateInvariant> <TabNavigator /> </AuthenticateInvariant>;
+    };
+  };
+};
+
+let app = () => {
+  let (migrated, setMigrated) = React.useState(_ => false);
   React.useEffect0(_ => {
-    Db.migrate(ignore);
+    Db.migrate(_ => setMigrated(_ => true));
     None;
   });
 
-  if (profile === None) {
-    <Authorize />
+  if (!migrated) {
+    <StyledText value="loading..." />;
   } else {
-    <AuthenticateInvariant> <TabNavigator /> </AuthenticateInvariant>;
+    <Profile> <AppContainer /> </Profile>;
   };
 };
