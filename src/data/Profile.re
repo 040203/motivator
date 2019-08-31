@@ -10,13 +10,17 @@ type profileContextValue = {
 
 let profileContext = React.createContext((None, ignore));
 let useProfile = () => React.useContext(profileContext);
+let useProfileOrFail = () => {
+  let (profile, updateProfile) = useProfile();
+
+  switch (profile) {
+  | Some(profile) => (profile, updateProfile)
+  | None => raise(Not_found)
+  };
+};
 
 module ProfileProvider = {
-  let makeProps = (~value, ~children, ()) => {
-    "value": value,
-    "children": children,
-  };
-
+  let makeProps = Helpers.makeProviderProps
   let make = React.Context.provider(profileContext);
 };
 

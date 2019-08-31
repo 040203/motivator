@@ -5,3 +5,8 @@ let customStyleFromOption = style =>
   | Some(style) => style
   | None => ReactNative.Style.style()
   };
+
+let makeProviderProps = (~value, ~children, ()) => {
+  "value": value,
+  "children": children,
+};

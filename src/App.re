@@ -2,8 +2,9 @@ module AppContainer = {
   [@react.component]
   let make = () => {
     let (profile, _) = Profile.useProfile();
+    let (lastWeight, _) = LastWeight.useLastWeight();
 
-    if (profile === None) {
+    if (profile === None || lastWeight === None) {
       <Authorize />;
     } else {
       <AuthenticateInvariant> <TabNavigator /> </AuthenticateInvariant>;
@@ -13,6 +14,7 @@ module AppContainer = {
 
 let app = () => {
   let (migrated, setMigrated) = React.useState(_ => false);
+
   React.useEffect0(_ => {
     Db.migrate(_ => setMigrated(_ => true));
     None;
@@ -21,6 +23,6 @@ let app = () => {
   if (!migrated) {
     <StyledText value="loading..." />;
   } else {
-    <Profile> <AppContainer /> </Profile>;
+    <Profile> <LastWeight> <AppContainer /> </LastWeight> </Profile>;
   };
 };
