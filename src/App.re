@@ -17,6 +17,7 @@ let app = () => {
 
   React.useEffect0(_ => {
     Db.migrate(_ => setMigrated(_ => true));
+    
     None;
   });
 

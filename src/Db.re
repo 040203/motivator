@@ -1,4 +1,3 @@
-open Js.Promise;
 open ReasonDateFns;
 open Expo.SQLite;
 open Expo.SQLite.Transaction;
@@ -54,12 +53,6 @@ let sql = (sqlQuery, arguments) => {
   );
 };
 
-let resolveOnSuccess = onSuccess =>
-  then_(result => {
-    onSuccess(result);
-    resolve(ignore);
-  });
-
 let migrate = onSuccess =>
   Js.Promise.all2((
     "
@@ -77,32 +70,35 @@ let migrate = onSuccess =>
     "
     ->sql([]),
   ))
-  |> resolveOnSuccess(onSuccess)
+  |> Helpers.thenIgnore(onSuccess)
   |> ignore;
 
 let getLatestWieght = (onSuccess: weight => unit) =>
   "SELECT * FROM weights ORDER BY date DESC LIMIT 1"->sql([])
-  |> resolveOnSuccess(weights => onSuccess(weights[0]))
+  |> Helpers.thenIgnore(weights => onSuccess(weights[0]))
   |> ignore;
 
 let selectAllWeights = (onSuccess: array(weight) => unit) =>
-  sql("SELECT * FROM weights", []) |> resolveOnSuccess(onSuccess) |> ignore;
+  sql("SELECT * FROM weights", []) |> Helpers.thenIgnore(onSuccess) |> ignore;
 
 let insertWieght = (onSuccess, (date, weight): (Js.Date.t, float)) =>
-  [`String(date |> DateFns.format("yyyy-MM-dd")), `Float(weight)]
+  [
+    `String(date |> DateFns.format("yyyy-MM-dd")),
+    `Float(weight),
+  ]
   |> sql("INSERT or REPLACE INTO weights (date, weight) values(?, ?)")
-  |> resolveOnSuccess(onSuccess)
+  |> Helpers.thenIgnore(onSuccess)
   |> ignore;
 
 let getProfile = (onSuccess: option(profile) => unit) =>
   sql("SELECT * FROM profile LIMIT 1", [])
-  |> resolveOnSuccess(profiles => onSuccess(profiles[0]))
+  |> Helpers.thenIgnore(profiles => onSuccess(profiles[0]))
   |> ignore;
 
 let insertProfile = (onSuccess, (name, goal)) =>
   [`String(name), `Float(goal)]
   |> sql("INSERT or REPLACE INTO profile (name, goal) values(?, ?)")
-  |> resolveOnSuccess(onSuccess)
+  |> Helpers.thenIgnore(onSuccess)
   |> ignore;
 
 let dropDb = db => sql("DROP TABLE IF EXISTS" ++ " " ++ db, []);

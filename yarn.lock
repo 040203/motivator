@@ -2062,6 +2062,13 @@ expo-local-authentication@^6.0.0:
   dependencies:
     invariant "^2.2.4"
 
+expo-localization@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/expo-localization/-/expo-localization-6.0.0.tgz#bbd6ee912ac6ba3a37e8ec334fbbeacb227e037f"
+  integrity sha512-ZU0621WDqmoMoko0p+lzGsLIsUTifHhsFqpf0w7S0fC+6djCBD47HFGzbm01sTVrRMS+tOsoVxa8D31ZaBqy5Q==
+  dependencies:
+    rtl-detect "^1.0.2"
+
 expo-location@~6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/expo-location/-/expo-location-6.0.0.tgz#da4e22ee5aa951d2c65d94f9916323eb4b3f8a01"
@@ -4346,10 +4353,10 @@ readable-stream@^2.0.1, readable-stream@^2.0.6, readable-stream@^2.2.2, readable
     string_decoder "~1.1.1"
     util-deprecate "~1.0.1"
 
-reason-date-fns@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/reason-date-fns/-/reason-date-fns-0.3.0.tgz#ab893b55bec09bacc4fd4b8f352d07216e314053"
-  integrity sha512-ujDn7S+ZAcD5de38QqwyYgNj+AjC5XOuQc/jkXBmYJoYJWUHoOP+HhRtmLjwdSmLiqmW+/E9vKj7FX5mr40DwA==
+reason-date-fns@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/reason-date-fns/-/reason-date-fns-0.7.0.tgz#7a5101e8c864f7341f0838712b1d38be05068a01"
+  integrity sha512-plMONpuzZQ5QKD1JmteyOBY3dewKgwmGYA8f+UVDoShmzFJCS9p7einp7GcR5N3cm2cV2n8gpFThah7lvQ+Hkw==
 
 reason-expo@^34.0.0:
   version "34.0.0"
@@ -4523,6 +4530,11 @@ rsvp@^3.3.3:
   version "3.6.2"
   resolved "https://registry.yarnpkg.com/rsvp/-/rsvp-3.6.2.tgz#2e96491599a96cde1b515d5674a8f7a91452926a"
   integrity sha512-OfWGQTb9vnwRjwtA2QwpG2ICclHC3pgXZO5xt8H2EfgDquO0qVdSb5T88L4qJVAEugbS56pAuV4XZM58UX8ulw==
+
+rtl-detect@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/rtl-detect/-/rtl-detect-1.0.2.tgz#8eca316f5c6563d54df4e406171dd7819adda67f"
+  integrity sha512-5X1422hvphzg2a/bo4tIDbjFjbJUOaPZwqE6dnyyxqwFqfR+tBcvfqapJr0o0VygATVCGKiODEewhZtKF+90AA==
 
 run-async@^2.2.0:
   version "2.3.0"

@@ -1,9 +1,12 @@
 open ReactNative;
 open ReactNative.Style;
+open Helpers;
+open ReasonDateFns;
 
 type stage =
   | Info
-  | Greeting;
+  | Greeting
+  | Notification;
 
 type action =
   | SetGoal(float)
@@ -30,7 +33,7 @@ let styles =
           ~alignItems=`center,
           (),
         ),
-      "weightInput": style(~width=100.->pct),
+      "fullWidth": style(~width=100.->pct, ()),
       "image":
         style(
           ~marginTop=theme.spacing(4.),
@@ -40,7 +43,7 @@ let styles =
           (),
         ),
       "description": style(~width=90.->pct, ()),
-      "pullButtom": style(~marginTop=auto, ()),
+      "pullBottom": style(~marginTop=auto, ()),
     }
   );
 
@@ -62,7 +65,7 @@ module GreetingStage = {
         value="I am your fitness unicorn. I'll try to help you with your goals, but everything depends only on you. Let's start!"
       />
       <LargeButton
-        style=styles##pullButtom
+        style=styles##pullBottom
         title="Continue"
         onPress=onContinue
       />
@@ -86,10 +89,53 @@ module InfoStage = {
       />
       <StyledText
         textAlign=`center
-        style={Style.array([|styles##pullButtom, styles##description|])}
+        style={Style.array([|styles##pullBottom, styles##description|])}
         value="Try to keep your goals realistic. Keep in mind that you can loose maximum 5-10kg without breaks."
       />
       <LargeButton title="Continue" onPress=onContinue />
+    </SafeAreaView>;
+  };
+};
+
+module NotificaitonStage = {
+  [@react.component]
+  let make = (~onContinue) => {
+    let (date, setDate) =
+      React.useState(_ =>
+        Js.Date.make()
+        |> DateFns.addDays(1)
+        |> DateFns.startOfDay
+        |> DateFns.setHours(7.)
+      );
+
+    let setupNotification = _ => {
+      NotificationManager.scheduleReminder()
+      |> thenIgnore(_ => onContinue())
+      |> catchIgnore(_ => onContinue())
+      |> ignore;
+    };
+
+    <SafeAreaView style=styles##stageContainer>
+      <StyledText variant=LargeTitle value="Reminder" />
+      <StyledText
+        variant=Title
+        style=styles##description
+        value="It is required to fill the progress each day. We can send you notification whenever you want to remind you about weighing."
+      />
+      <DatePickerIOS
+        date
+        mode=`time
+        minuteInterval=`_10
+        onDateChange={date => setDate(_ => date)}
+        locale=Expo.Localization.locale
+        style=styles##fullWidth
+      />
+      <LargeButton
+        style=styles##pullBottom
+        title="Setup reminder"
+        onPress=setupNotification
+      />
+      <Button title="Without reminder" onPress={_ => onContinue()} />
     </SafeAreaView>;
   };
 };
@@ -99,6 +145,7 @@ let animationFromStage = stage => {
     switch (stage) {
     | Greeting => 0.
     | Info => window##width
+    | Notification => window##width *. 2.
     };
 
   Animated.Value.Timing.config(
@@ -111,23 +158,23 @@ let animationFromStage = stage => {
 [@react.component]
 let make = () => {
   let (_, setProfile) = Profile.useProfile();
-  let marginLeft = Animated.Value.create(0.);
+  let marginLeft =
+    React.useRef(Animated.Value.create(0.)) |> React.Ref.current;
 
   let (state, dispatch) =
     React.useReducer(
       (state, action) =>
         switch (action) {
+        | SetGoal(goal) => {...state, goal}
+        | SetCurrentWeight(currentWeight) => {...state, currentWeight}
         | SetStage(stage) =>
           marginLeft
-          ->Animated.timing(animationFromStage(stage))
+          ->Animated.timing(stage |> animationFromStage)
           ->Animated.start(~endCallback=ignore, ());
 
           {...state, stage};
-
-        | SetCurrentWeight(currentWeight) => {...state, currentWeight}
-        | SetGoal(goal) => {...state, goal}
         },
-      {stage: Greeting, currentWeight: 100., goal: 80.},
+      {stage: Greeting, currentWeight: 100., goal: 90.},
     );
 
   let selectStage = (newStage, _) => dispatch(SetStage(newStage));
@@ -143,6 +190,7 @@ let make = () => {
       style(~left=marginLeft->Animated.StyleProp.float->dp, ()),
     |])}>
     <GreetingStage onContinue={Info |> selectStage} />
-    <InfoStage state dispatch onContinue=submit />
+    <InfoStage state dispatch onContinue={Notification |> selectStage} />
+    <NotificaitonStage onContinue=submit />
   </Animated.View>;
 };
