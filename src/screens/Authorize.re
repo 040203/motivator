@@ -158,6 +158,7 @@ let animationFromStage = stage => {
 [@react.component]
 let make = () => {
   let (_, setProfile) = Profile.useProfile();
+  let (_, setLastWeight) = LastWeight.useLastWeight();
   let marginLeft =
     React.useRef(Animated.Value.create(0.)) |> React.Ref.current;
 
@@ -180,8 +181,14 @@ let make = () => {
   let selectStage = (newStage, _) => dispatch(SetStage(newStage));
 
   let submit = _ => {
-    (Js.Date.make(), state.currentWeight)
-    |> Db.insertWieght(_ => setProfile({name: "heh", goal: state.goal}));
+    let insertProfile = _ =>
+      setProfile({
+        name: "some name",
+        goal: state.goal,
+        initialWeight: state.currentWeight,
+      });
+
+    setLastWeight(state.currentWeight, ~onSuccess=insertProfile);
   };
 
   <Animated.View

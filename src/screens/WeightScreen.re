@@ -28,6 +28,7 @@ let styles =
 
 [@react.component]
 let make = () => {
+  let prevProgressRef = React.useRef(0.);
   let (profile, _) = Profile.useProfileOrFail();
   let (currentWieght, updateWieght) = LastWeight.useLastWeightOrFail();
   let (isAddRecordOpen, setIsAddRecordOpen) = React.useState(() => false);
@@ -38,22 +39,44 @@ let make = () => {
       (currentWieght, profile.goal),
     );
 
+  let progress =
+    React.useMemo3(
+      () => {
+        let wantToLose = profile.initialWeight -. profile.goal;
+        1. -. toTheGoal /. wantToLose;
+      },
+      (toTheGoal, profile.goal, profile.initialWeight),
+    );
+
+  // animation so weird if animating long change like from 0.1 to 0.6
+  let shouldAnimateProgress =
+    React.useMemo1(
+      _ =>
+        toTheGoal > 0.
+        && Js.Math.abs_float(React.Ref.current(prevProgressRef) -. progress)
+        < 0.1,
+      [|progress|],
+    );
+
+  React.Ref.setCurrent(prevProgressRef, progress);
+
   let toggleModal = _ => setIsAddRecordOpen(value => !value);
   let isEditing = DateFns.isSameDay(currentWieght.date, Js.Date.make());
 
   let handleWeightChange = newWeight => {
     newWeight |> updateWieght;
     toggleModal();
+    Expo.Haptics.notificationAsync(Expo.Haptics.Success);
   };
 
   <>
     <SvgCharts.ProgressCircle
       style=styles##progress
-      progress=0.2
+      progress
       strokeWidth=10
       progressColor="rgb(134, 65, 244)"
-      animate=true
-      animationDuration=300>
+      animate=shouldAnimateProgress
+      animationDuration=500>
       <View style=styles##progressLabelContainer>
         <Text style=styles##progressLabel>
           {str(currentWieght.weight->Js.Float.toString ++ "kg")}
@@ -64,7 +87,7 @@ let make = () => {
       variant=Title
       value={
         {js|До цели осталось |js}
-        ++ toTheGoal->Js.Float.toFixedWithPrecision(~digits=2)
+        ++ toTheGoal->Js.Float.toFixedWithPrecision(~digits=1)
         ++ {js|кг, вперед!|js}
       }
     />

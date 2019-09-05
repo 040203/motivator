@@ -3,7 +3,11 @@ type weightData = {
   weight: float,
 };
 
-let lastWeightContext = React.createContext((None, ignore));
+let lastWeightContext =
+  React.createContext((
+    None,
+    (~onSuccess: unit => unit=ignore, newWeight: float) => (),
+  ));
 
 module LastWeightProvider = {
   let makeProps = Helpers.makeProviderProps;
@@ -41,11 +45,11 @@ let make = (~children) => {
     None;
   });
 
-  let updateWeight = newWeight => {
+  let updateWeight = (~onSuccess=ignore, newWeight) => {
     let date = Js.Date.make();
     setLastWeight(_ => Some({date, weight: newWeight}));
 
-    (date, newWeight) |> Db.insertWieght(ignore);
+    (date, newWeight) |> Db.insertWieght(_ => onSuccess());
   };
 
   <LastWeightProvider value=(lastWeight, updateWeight)>

@@ -10,10 +10,17 @@ type weight = {
   weight: float,
 };
 
-[@bs.deriving abstract]
 type profile = {
-  goal: float,
   name: string,
+  goal: float,
+  initialWeight: float,
+};
+
+[@bs.deriving abstract]
+type profileDb = {
+  name: string,
+  goal: float,
+  initialWeight: float,
 };
 
 let sql = (sqlQuery, arguments) => {
@@ -65,7 +72,8 @@ let migrate = onSuccess =>
     "
     CREATE TABLE IF NOT EXISTS profile (
       name text PRIMARY KEY NOT NULL,
-      goal float NOT NULL
+      goal float NOT NULL,
+      initialWeight float NOT NULL
     );
     "
     ->sql([]),
@@ -82,22 +90,21 @@ let selectAllWeights = (onSuccess: array(weight) => unit) =>
   sql("SELECT * FROM weights", []) |> Helpers.thenIgnore(onSuccess) |> ignore;
 
 let insertWieght = (onSuccess, (date, weight): (Js.Date.t, float)) =>
-  [
-    `String(date |> DateFns.format("yyyy-MM-dd")),
-    `Float(weight),
-  ]
+  [`String(date |> DateFns.format("yyyy-MM-dd")), `Float(weight)]
   |> sql("INSERT or REPLACE INTO weights (date, weight) values(?, ?)")
   |> Helpers.thenIgnore(onSuccess)
   |> ignore;
 
-let getProfile = (onSuccess: option(profile) => unit) =>
+let getProfile = (onSuccess: option(profileDb) => unit) =>
   sql("SELECT * FROM profile LIMIT 1", [])
   |> Helpers.thenIgnore(profiles => onSuccess(profiles[0]))
   |> ignore;
 
-let insertProfile = (onSuccess, (name, goal)) =>
-  [`String(name), `Float(goal)]
-  |> sql("INSERT or REPLACE INTO profile (name, goal) values(?, ?)")
+let insertProfile = (onSuccess, (name, goal, initialWeight)) =>
+  [`String(name), `Float(goal), `Float(initialWeight)]
+  |> sql(
+       "INSERT or REPLACE INTO profile (name, goal, initialWeight) values(?, ?, ?)",
+     )
   |> Helpers.thenIgnore(onSuccess)
   |> ignore;
 

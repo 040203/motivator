@@ -1,7 +1,4 @@
-type profile = {
-  name: string,
-  goal: float,
-};
+open Db;
 
 type profileContextValue = {
   data: option(profile),
@@ -20,7 +17,7 @@ let useProfileOrFail = () => {
 };
 
 module ProfileProvider = {
-  let makeProps = Helpers.makeProviderProps
+  let makeProps = Helpers.makeProviderProps;
   let make = React.Context.provider(profileContext);
 };
 
@@ -37,6 +34,7 @@ let make = (~children) => {
           Some({
             name: profileObj |> Db.nameGet,
             goal: profileObj |> Db.goalGet,
+            initialWeight: profileObj |> Db.initialWeightGet,
           })
         }
       )
@@ -46,10 +44,8 @@ let make = (~children) => {
   });
 
   let updateProfile = data => {
-    (data.name, data.goal)
-    |> Db.insertProfile(_ =>
-         setProfile(_ => Some({name: data.name, goal: data.goal}))
-       );
+    (data.name, data.goal, data.initialWeight)
+    |> Db.insertProfile(_ => setProfile(_ => Some(data)));
   };
 
   <ProfileProvider value=(profile, updateProfile)>
