@@ -33,12 +33,12 @@ let styles =
   );
 
 [@react.component]
-let make = (~icon, ~text, ~onPress, ~colors) => {
+let make = (~icon,~i18n, ~onPress, ~colors) => {
   <TouchableHighlight style=styles##highlight onPress>
     <LinearGradient
       start=[|0., 1.|] _end=[|1., 0.|] colors style=styles##gradient>
       <Icons.FontAwesome5 name=icon size=24 color="white" />
-      <StyledText color="white" size=20. value=text />
+      <StyledText color="white" size=20. i18n=i18n />
     </LinearGradient>
   </TouchableHighlight>;
 };

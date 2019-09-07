@@ -7,6 +7,13 @@ let str = React.string;
 let styles =
   Styles.makeStyles(theme =>
     {
+      "subtitle":
+        style(
+          ~marginLeft=theme.spacing(2.),
+          ~marginRight=theme.spacing(2.),
+          ~marginBottom=theme.spacing(2.),
+          (),
+        ),
       "progress":
         style(
           ~marginTop=theme.spacing(2.),
@@ -22,7 +29,6 @@ let styles =
           ~alignItems=`center,
           (),
         ),
-      "progressLabel": style(~fontSize=32., ()),
     }
   );
 
@@ -43,7 +49,9 @@ let make = () => {
     React.useMemo3(
       () => {
         let wantToLose = profile.initialWeight -. profile.goal;
-        1. -. toTheGoal /. wantToLose;
+        let progress = 1. -. toTheGoal /. wantToLose;
+
+        progress <= 0. ? 0.01 : progress;
       },
       (toTheGoal, profile.goal, profile.initialWeight),
     );
@@ -70,31 +78,43 @@ let make = () => {
   };
 
   <>
+    <StyledText
+      size=18.
+      textAlign=`center
+      style=styles##subtitle
+      i18n="Last weigh was"
+      interpolate={
+        "date":
+          currentWieght.date
+          |> Localization.Date.localizedFormatDistance(Js.Date.make()),
+      }
+    />
     <SvgCharts.ProgressCircle
-      style=styles##progress
       progress
       strokeWidth=10
+      style=styles##progress
       progressColor="rgb(134, 65, 244)"
       animate=shouldAnimateProgress
       animationDuration=500>
       <View style=styles##progressLabelContainer>
-        <Text style=styles##progressLabel>
-          {str(currentWieght.weight->Js.Float.toString ++ "kg")}
-        </Text>
+        <StyledText
+          size=32.
+          i18n="kg"
+          interpolate={"value": currentWieght.weight}
+        />
       </View>
     </SvgCharts.ProgressCircle>
     <StyledText
       variant=Title
-      value={
-        {js|До цели осталось |js}
-        ++ toTheGoal->Js.Float.toFixedWithPrecision(~digits=1)
-        ++ {js|кг, вперед!|js}
+      i18n="To the goal"
+      interpolate={
+        "toTheGoal": toTheGoal |> Js.Float.toFixedWithPrecision(~digits=1),
       }
     />
     <LargeTile
       onPress=toggleModal
       icon={isEditing ? "pen" : "plus"}
-      text={isEditing ? "Change today weight record" : "Add new weight record"}
+      i18n={isEditing ? "Change today weight record" : "Add new weight record"}
       colors=[|
         Styles.theme.palette.primaryLight,
         Styles.theme.palette.primaryDark,

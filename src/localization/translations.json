@@ -1,0 +1,36 @@
+{
+  "en": {
+    "kg": "{{value}}kg",
+    "Progress": "Progress",
+    "Statistics": "Statistics",
+    "Transformation": "Transformation",
+    "To the goal": "It's left only {{toTheGoal}}kg to the goal. Let's do it!",
+    "Last weigh was": "Last weigh was {{date}} ago",
+    "Change today weight record": "Change today weight record",
+    "Add new weight record": "Add new weight record",
+    "Edit weight": "Edit weight",
+    "Add weight": "Add weight",
+    "Close": "Close",
+    "Yes, change today weigh": "Yes, change today weigh",
+    "addWeightDescription": "Make sure that you are weighing yourself at the same time each day. Ideally for you to be wearing the same clothes and make several times for better reliability.",
+    "Coding jumbo is working on": "Coding jumbo is working on.",
+    "Keep calm and stay tuned": "Keep calm and stay tuned"
+  },
+  "ru": {
+    "kg": "{{value}}кг",
+    "Progress": "Прогресс",
+    "Statistics": "Статистика",
+    "Transformation": "Трансформация",
+    "To the goal": "До цели осталось {{toTheGoal}}кг. Вперед!",
+    "Last weigh was": "Последнее взвешивание — {{date}} назад",
+    "Change today weight record": "Изменить сегодняшний вес",
+    "Add new weight record": "Внести новое взвешивание",
+    "Edit weight": "Изменить вес",
+    "Add weight": "Добавить вес",
+    "Yes, change today weigh": "Да, изменить вес",
+    "Close": "Закрыть",
+    "addWeightDescription": "Убедитесь, что вы взвешиваетесь в одно и то же время каждый день. В идеале нужно носить и ту же одежду и вставать на весы несколько раз для большей надежности.",
+    "Coding jumbo is working on": "Слоник-кодер уже работает над этим...",
+    "Keep calm and stay tuned": "Сохраняйте спокойствие! И будьте вкурсе событий 😎"
+  }
+}

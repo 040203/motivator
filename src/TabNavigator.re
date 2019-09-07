@@ -45,11 +45,11 @@ let make = () => {
   <SafeAreaView style=styles##container>
     <ScrollView style={style(~width=pct(100.), ())}>
       <View style=styles##pageContainer>
-        <StyledText variant=LargeTitle value=title />
+        <StyledText variant=LargeTitle i18n=title />
         {switch (route) {
          | Wieght => <WeightScreen />
-         | Transformation => <WeightScreen />
-         | Statistics => <WeightScreen />
+         | Transformation => <ComingSoon />
+         | Statistics => <ComingSoon />
          }}
       </View>
     </ScrollView>

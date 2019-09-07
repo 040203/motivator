@@ -31,10 +31,12 @@ let styles =
 [@react.component]
 let make =
     (
-      ~value,
+      ~value=?,
+      ~i18n=?,
+      ~interpolate=?,
       ~textAlign=`auto,
       ~variant: variant=BuildFromProps,
-      ~size=14.,
+      ~size=16.,
       ~color="black",
       ~weight=`normal,
       ~style as customStyle=style(),
@@ -46,12 +48,27 @@ let make =
     | BuildFromProps => style()
     };
 
+  let text =
+    switch (value) {
+    | Some(text) => text
+    | None =>
+      switch (i18n) {
+      | None => raise(Not_found)
+      | Some(key) =>
+        switch (interpolate) {
+        | None => Localization.i18n(key)
+        | Some(interpolateObj) =>
+          Localization.i18nInterpolate(key, interpolateObj)
+        }
+      }
+    };
+
   <Text
     style={Style.array([|
       style(~textAlign, ~fontSize=size, ~fontWeight=weight, ~color, ()),
       variantStyle,
       customStyle,
     |])}>
-    {React.string(value)}
+    {React.string(text)}
   </Text>;
 };

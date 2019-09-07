@@ -9,6 +9,13 @@ let styles =
       "picker": style(),
       "animation": style(~position=`relative, ~flex=0.6, ()),
       "title": style(~marginTop=dp(0.), ()),
+      "description":
+        style(
+          ~marginLeft=theme.spacing(2.),
+          ~marginRight=theme.spacing(2.),
+          ~marginBottom=theme.spacing(2.),
+          (),
+        ),
       "submitBtn":
         style(~marginTop=auto, ~marginBottom=theme.spacing(6.), ()),
     }
@@ -34,22 +41,26 @@ let make = (~isEditing, ~initialWieght, ~isOpen, ~onChange, ~onClose) => {
         variant=LargeTitle
         textAlign=`center
         style=styles##title
-        value={isEditing ? "Edit weight" : "Add weight"}
+        i18n={isEditing ? "Edit weight" : "Add weight"}
       />
-      <StyledText textAlign=`center value="Make sure you have same clothes" />
+      <StyledText
+        textAlign=`center
+        style=styles##description
+        i18n="addWeightDescription"
+      />
       <View style=styles##picker>
         <WeightInput value=weight onChange={value => setWeight(_ => value)} />
       </View>
       <View style=styles##submitBtn>
         <LargeButton
           onPress={_ => onChange(weight)}
-          title="Submit"
+          title={Localization.i18n("Yes, change today weigh")}
           color={
             isEditing
               ? Styles.theme.palette.secondary : Styles.theme.palette.primary
           }
         />
-        <Button title="Close" onPress={_ => onClose()} />
+        <Button title={Localization.i18n("Close")} onPress={_ => onClose()} />
       </View>
     </SafeAreaView>
   </Modal>;

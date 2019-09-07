@@ -1757,9 +1757,9 @@ d3-time@1:
   integrity sha512-Z3wpvhPLW4vEScGeIMUckDW7+3hWKOQfAWg/U7PlWBnQmeKQ00gCUsTtWSYulrKNA7ta8hJ+xXc6MHrMuITwEw==
 
 date-fns@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.0.0.tgz#52f05c6ae1fe0e395670082c72b690ab781682d0"
-  integrity sha512-nGZDA64Ktq5uTWV4LEH3qX+foV4AguT5qxwRlJDzJtf57d4xLNwtwrfb7SzKCoikoae8Bvxf0zdaEG/xWssp/w==
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.1.0.tgz#0d7e806c3cefe14a943532dbf968995ccfd46bd9"
+  integrity sha512-eKeLk3sLCnxB/0PN4t1+zqDtSs4jb4mXRSTZ2okmx/myfWyDqeO4r5nnmA5LClJiCwpuTMeK2v5UQPuE4uMaxA==
 
 debug@2.6.9, debug@^2.2.0, debug@^2.3.3:
   version "2.6.9"
@@ -2590,6 +2590,11 @@ http-errors@~1.7.2:
     setprototypeof "1.1.1"
     statuses ">= 1.5.0 < 2"
     toidentifier "1.0.0"
+
+i18n-js@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/i18n-js/-/i18n-js-3.3.0.tgz#05512f7184b5117c087ab597be649720a834c068"
+  integrity sha512-+m8jh84IIWlFwEJgwrWCkeIwIES9ilJKBOj5qx8ZTLLmlPz7bjKnCdxf254wRf6M4pkQHtgXGT9r9lGk0e9aug==
 
 iconv-lite@^0.4.17, iconv-lite@^0.4.4, iconv-lite@~0.4.13:
   version "0.4.24"
@@ -4358,15 +4363,15 @@ readable-stream@^2.0.1, readable-stream@^2.0.6, readable-stream@^2.2.2, readable
     string_decoder "~1.1.1"
     util-deprecate "~1.0.1"
 
-reason-date-fns@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/reason-date-fns/-/reason-date-fns-0.7.0.tgz#7a5101e8c864f7341f0838712b1d38be05068a01"
-  integrity sha512-plMONpuzZQ5QKD1JmteyOBY3dewKgwmGYA8f+UVDoShmzFJCS9p7einp7GcR5N3cm2cV2n8gpFThah7lvQ+Hkw==
+reason-date-fns@^0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/reason-date-fns/-/reason-date-fns-0.9.1.tgz#bae6928461e707627898b7ad8661ba0c905ab4f4"
+  integrity sha512-l7bWR+rRel1F8df9a6ksO4sSSipUEYASgPezubflVlOYbIGTQIffgzxdFHOrmjTKSEoM8bPN+rQ7jdAHMJY5qQ==
 
 reason-expo@^34.0.0:
-  version "34.0.0"
-  resolved "https://registry.yarnpkg.com/reason-expo/-/reason-expo-34.0.0.tgz#d68814f9ad5dfe3940087affea25be70574c1ffd"
-  integrity sha512-bwIRkp5D5XqIuiIYiWlv6F9TNYZaAXrbOXTQEDdqZYBCoEaNhAXX9XXgP/6jPIoYt8GG6tOidb/ty8aYeDc8aA==
+  version "34.3.2"
+  resolved "https://registry.yarnpkg.com/reason-expo/-/reason-expo-34.3.2.tgz#c3ed04c5e07c53c79af98e108b4ba1aa439de11d"
+  integrity sha512-BhMocmNZVYWYd11c8Nzr8eMFUDyH6fR8G60VaStreDF+1zsRyYbslIJF1+1gCySIbnVV6eBtIa7VATQUhBgCBQ==
 
 reason-react-native@^0.60.0:
   version "0.60.0"

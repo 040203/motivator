@@ -1,3 +1,4 @@
+
 let getRandomItem = array => array[Js.Math.random_int(0, array->Array.length)];
 
 let customStyleFromOption = style =>
@@ -22,3 +23,4 @@ let catchIgnore = onSuccess =>
     onSuccess(result);
     Js.Promise.resolve(ignore);
   });
+
