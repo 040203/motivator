@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Motivator",
-    "description": "A basic ReasonExpo app.",
+    "name": "Fitness Motivator",
+    "description": "",
     "slug": "reason-motivator",
     "privacy": "public",
     "sdkVersion": "34.0.0",
