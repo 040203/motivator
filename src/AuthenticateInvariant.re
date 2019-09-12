@@ -41,7 +41,7 @@ type authenticationState =
 
 [@react.component]
 let make = (~children) => {
-  let (authState, setAuthenticated) = React.useState(() => Success);
+  let (authState, setAuthenticated) = React.useState(() => NotAuthorized);
 
   let authenticate = _ => {
     LocalAuthentication.authenticateAsync(authenticationOptions)
