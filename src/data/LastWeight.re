@@ -33,10 +33,7 @@ let make = (~children) => {
       setLastWeight(_ =>
         Some({
           weight: weight |> Db.weightGet,
-          date:
-            weight
-            |> Db.dateGet
-            |> ReasonDateFns.DateFns.parse(Js.Date.make(), "yyyy-MM-dd"),
+          date: weight |> Db.dateTimeIsoGet |> Js.Date.fromString,
         })
       )
     )

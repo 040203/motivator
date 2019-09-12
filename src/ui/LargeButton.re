@@ -26,7 +26,8 @@ let make =
       ~onPress,
       ~style as customStyle=?,
       ~color=Styles.theme.palette.primary,
-      ~title,
+      ~title:string=?,
+      ~i18n:string=?
     ) => {
   <TouchableHighlight
     underlayColor={Styles.theme.palette.primaryDark}
@@ -36,6 +37,6 @@ let make =
       Helpers.customStyleFromOption(customStyle),
     |])}
     onPress>
-    <StyledText variant=Title value=title color="white" />
+    <StyledText variant=Title i18n value=title color="white" />
   </TouchableHighlight>;
 };

@@ -7,6 +7,7 @@ let db = openDatabase("weight.db");
 [@bs.deriving abstract]
 type weight = {
   date: string,
+  dateTimeIso: string,
   weight: float,
 };
 
@@ -65,6 +66,7 @@ let migrate = onSuccess =>
     "
     CREATE TABLE IF NOT EXISTS weights (
     	date date PRIMARY KEY NOT NULL,
+      dateTimeIso text NOT NULL,
     	weight float
     );
     "
@@ -90,8 +92,14 @@ let selectAllWeights = (onSuccess: array(weight) => unit) =>
   sql("SELECT * FROM weights", []) |> Helpers.thenIgnore(onSuccess) |> ignore;
 
 let insertWieght = (onSuccess, (date, weight): (Js.Date.t, float)) =>
-  [`String(date |> DateFns.format("yyyy-MM-dd")), `Float(weight)]
-  |> sql("INSERT or REPLACE INTO weights (date, weight) values(?, ?)")
+  [
+    `String(date |> DateFns.format("yyyy-MM-dd")),
+    `String(date |> Js.Date.toISOString),
+    `Float(weight),
+  ]
+  |> sql(
+       "INSERT or REPLACE INTO weights (date, dateTimeIso, weight) values(?, ?, ?)",
+     )
   |> Helpers.thenIgnore(onSuccess)
   |> ignore;
 
@@ -109,3 +117,5 @@ let insertProfile = (onSuccess, (name, goal, initialWeight)) =>
   |> ignore;
 
 let dropDb = db => sql("DROP TABLE IF EXISTS" ++ " " ++ db, []);
+
+selectAllWeights(Js.log)
