@@ -14,15 +14,16 @@ let checkPermission = () => {
 
 let scheduleReminder = date => {
   checkPermission()
+  |> thenIgnore(_ => Expo.Notifications.dismissAllNotificationsAsync())
   |> then_(_ =>
        Expo.Notifications.scheduleLocalNotificationAsync(
-         {
-           "title": "Update progress",
-           "body": "It's time to udpate your progress for today",
+         { 
+           "title": Localization.i18n("Notification_title"),
+           "body": Localization.i18n("Notification_body"),
          },
          {"time": date, "repeat": "day"},
        )
      )
-  |> thenIgnore(ignore)
+  |> thenIgnore(Js.log)
   |> catchIgnore(res => Js.log(res));
 };

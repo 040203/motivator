@@ -10,8 +10,17 @@ let authenticationOptions =
     (),
   );
 
+let window = Dimensions.get(`window);
+
 let styles =
   StyleSheet.create({
+    "faceIdAnimation":
+      style(
+        ~position=`relative,
+        ~width=(window##width *. 0.6)->dp,
+        ~flex=1.,
+        (),
+      ),
     "notAuthorizedContainer":
       style(
         ~flex=1.,
@@ -30,11 +39,9 @@ type authenticationState =
   | NotAvailable
   | InBackground(Js.Date.t);
 
-let window = Dimensions.get(`window); 
-
 [@react.component]
 let make = (~children) => {
-  let (authState, setAuthenticated) = React.useState(() => NotAuthorized);
+  let (authState, setAuthenticated) = React.useState(() => Success);
 
   let authenticate = _ => {
     LocalAuthentication.authenticateAsync(authenticationOptions)
@@ -59,9 +66,7 @@ let make = (~children) => {
     None;
   });
 
-  let handleAppStateChange = nextAppState => {
-    Js.log(nextAppState);
-
+  let handleAppStateChange = nextAppState =>
     if (nextAppState === AppState.background
         || nextAppState === AppState.inactive) {
       setAuthenticated(_ => InBackground(Js.Date.make()));
@@ -78,7 +83,6 @@ let make = (~children) => {
         setAuthenticated(_ => newState);
       };
     };
-  };
 
   React.useEffect(() => {
     AppState.addEventListener(`change(state => handleAppStateChange(state)))
@@ -96,29 +100,20 @@ let make = (~children) => {
     </>
   | NotAvailable =>
     <View style=styles##notAuthorizedContainer>
-      <Text>
-        {React.string(
-           "Please enable your local device authentication (TouchID or FaceID)",
-         )}
-      </Text>
+      <StyledText
+        variant=Title
+        i18n="Please enable your local device authentication (TouchID or FaceID)"
+      />
     </View>
   | NotAuthorized =>
     <View style=styles##notAuthorizedContainer>
       <StyledText variant=LargeTitle i18n="Unlock" />
       <StyledText variant=Title i18n="Unlock device to use this application" />
-      <View
-        style={style(
-          ~position=`relative,
-          ~width=(window##width *. 0.6)->dp,
-          ~flex=1.,
-          (),
-        )}>
+      <View style=styles##faceIdAnimation>
         <Lottie
-          autoPlay=true
           loop=false
-          source={Packager.require(
-            "../../../assets/animations/faceId.json",
-          )}
+          autoPlay=true
+          source={Packager.require("../../../assets/animations/faceId.json")}
         />
       </View>
       <LargeButton i18n="Unlock" onPress=authenticate />

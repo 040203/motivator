@@ -16,7 +16,10 @@
     "Coding jumbo is working on": "Coding jumbo is working on.",
     "Keep calm and stay tuned": "Keep calm and stay tuned",
     "Unlock": "Unlock",
-    "Unlock device to use this application": "Unlock device to use this application"
+    "Unlock device to use this application": "Unlock device to use this application",
+    "Please enable your local device authentication (TouchID or FaceID)": "Please enable your local device authentication (TouchID or FaceID)",
+    "Notification_title": "Update progress",
+    "Notification_body": "It's time to update your progress for today!"
   },
   "ru": {
     "kg": "{{value}}кг",
@@ -35,6 +38,9 @@
     "Coding jumbo is working on": "Слоник-кодер уже работает над этим...",
     "Keep calm and stay tuned": "Сохраняйте спокойствие! И будьте вкурсе событий 😎",
     "Unlock": "Разблокировать",
-    "Unlock device to use this application": "Разблокируйте устройство, чтобы продолжить"
+    "Unlock device to use this application": "Разблокируйте устройство, чтобы продолжить",
+    "Please enable your local device authentication (TouchID or FaceID)": "Для большей безопасности необходимо включить авторизацию на телефоне (TouchID или FaceID)",
+    "Notification_title": "Обновить прогресс",
+    "Notification_body": "Пора обновить ваш прогресс сегодня!"
   }
 }

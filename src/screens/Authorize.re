@@ -109,7 +109,7 @@ module NotificaitonStage = {
       );
 
     let setupNotification = _ => {
-      NotificationManager.scheduleReminder()
+      NotificationManager.scheduleReminder(date)
       |> thenIgnore(_ => onContinue())
       |> catchIgnore(_ => onContinue())
       |> ignore;
