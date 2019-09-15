@@ -14,7 +14,8 @@ let checkPermission = () => {
 
 let scheduleReminder = date => {
   checkPermission()
-  |> thenIgnore(_ => Expo.Notifications.dismissAllNotificationsAsync())
+  |> thenIgnore(_ => Expo.Notifications.cancelAllScheduledNotificationsAsync
+  ())
   |> then_(_ =>
        Expo.Notifications.scheduleLocalNotificationAsync(
          { 

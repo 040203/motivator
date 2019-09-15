@@ -19,7 +19,15 @@
     "Unlock device to use this application": "Unlock device to use this application",
     "Please enable your local device authentication (TouchID or FaceID)": "Please enable your local device authentication (TouchID or FaceID)",
     "Notification_title": "Update progress",
-    "Notification_body": "It's time to update your progress for today!"
+    "Notification_body": "It's time to update your progress for today!",
+    "Hello": "Hello",
+    "I am your fitness unicorn": "I am your fitness unicorn. I'll try to help you with your goals, but everything depends only on you. Let's start!",
+    "Try to keep your goals realistic": "Try to keep your goals realistic. It's better to loose weight periodically. Lose 5-10kg then give your body a short break/",
+    "Reminder": "Reminder",
+    "It is required to fill the progress each day": "It is required to fill the progress each day. We can send you notification whenever you want to remind you about weighing.",
+    "Setup reminder": "Setup reminder",
+    "Without reminder": "Without reminder",
+    "Current weight": "Current weight"
   },
   "ru": {
     "kg": "{{value}}кг",
@@ -41,6 +49,15 @@
     "Unlock device to use this application": "Разблокируйте устройство, чтобы продолжить",
     "Please enable your local device authentication (TouchID or FaceID)": "Для большей безопасности необходимо включить авторизацию на телефоне (TouchID или FaceID)",
     "Notification_title": "Обновить прогресс",
-    "Notification_body": "Пора обновить ваш прогресс сегодня!"
+    "Notification_body": "Пора обновить ваш прогресс сегодня!",
+    "Hello": "Привет",
+    "I am your fitness unicorn": "Я Ваш тренер-единорог. Я постараюсь помочь вам достичь ваших целей. Но все зависит только от Вас. Давайте начнем!",
+    "Try to keep your goals realistic": "Постарайтесь сделать ваши цели реалистичными. Лучше всего сбрасывать вес периодами по 5-10кг с небольшим перерывом.",
+    "Reminder": "Напоминание",
+    "It is required to fill the progress each day": "Необходимо отслеживать свой прогресс ежедневно. Мы можем отправлять Вам уведомление чтобы напомнить о взвешивании. Выберите удобное для вас время:",
+    "Setup reminder": "Установить напоминание",
+    "Without reminder": "Без напоминания",
+    "Current weight": "Текущий вес",
+    "Goal": "Цель"
   }
 }

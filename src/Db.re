@@ -118,4 +118,4 @@ let insertProfile = (onSuccess, (name, goal, initialWeight)) =>
 
 let dropDb = db => sql("DROP TABLE IF EXISTS" ++ " " ++ db, []);
 
-selectAllWeights(Js.log)
+dropDb("profile")

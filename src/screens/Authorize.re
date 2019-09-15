@@ -57,12 +57,12 @@ module GreetingStage = {
           Packager.require("../../../../assets/logo.png"),
         )}
       />
-      <StyledText variant=LargeTitle value="Hello" />
+      <StyledText variant=LargeTitle i18n="Hello" />
       <StyledText
         variant=Title
         textAlign=`center
         style=styles##description
-        value="I am your fitness unicorn. I'll try to help you with your goals, but everything depends only on you. Let's start!"
+        i18n="I am your fitness unicorn"
       />
       <LargeButton
         style=styles##pullBottom
@@ -77,12 +77,12 @@ module InfoStage = {
   [@react.component]
   let make = (~state, ~dispatch, ~onContinue) => {
     <SafeAreaView style=styles##stageContainer>
-      <StyledText variant=LargeTitle value="Current weight" />
+      <StyledText variant=LargeTitle i18n="Current weight" />
       <WeightInput
         value={state.currentWeight}
         onChange={newValue => dispatch(SetCurrentWeight(newValue))}
       />
-      <StyledText variant=LargeTitle value="Goal" />
+      <StyledText variant=LargeTitle i18n="Goal" />
       <WeightInput
         value={state.goal}
         onChange={newValue => dispatch(SetGoal(newValue))}
@@ -90,7 +90,7 @@ module InfoStage = {
       <StyledText
         textAlign=`center
         style={Style.array([|styles##pullBottom, styles##description|])}
-        value="Try to keep your goals realistic. Keep in mind that you can loose maximum 5-10kg without breaks."
+        i18n="Try to keep your goals realistic"
       />
       <LargeButton title="Continue" onPress=onContinue />
     </SafeAreaView>;
@@ -116,11 +116,11 @@ module NotificaitonStage = {
     };
 
     <SafeAreaView style=styles##stageContainer>
-      <StyledText variant=LargeTitle value="Reminder" />
+      <StyledText variant=LargeTitle i18n="Reminder" />
       <StyledText
         variant=Title
         style=styles##description
-        value="It is required to fill the progress each day. We can send you notification whenever you want to remind you about weighing."
+        i18n="It is required to fill the progress each day"
       />
       <DatePickerIOS
         date
@@ -132,10 +132,10 @@ module NotificaitonStage = {
       />
       <LargeButton
         style=styles##pullBottom
-        title="Setup reminder"
+        i18n="Setup reminder"
         onPress=setupNotification
       />
-      <Button title="Without reminder" onPress={_ => onContinue()} />
+      <Button title={Localization.i18n("Without reminder")} onPress={_ => onContinue()} />
     </SafeAreaView>;
   };
 };
